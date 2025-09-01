@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1">
+     <tr>
+        <th>Name</th>
+        <th>Date of birth</th>
+        <th>E-mail</th>
+        <th>Qualification</th>
+        <th>Area of interested</th>
+        <th>Phone NO</th>
+        <td></td>
+     </tr>
+      {% for i in val %}  
+     <tr>
+       <td>{{ i.Name }}</td>
+       <td>{{ i.DOB }}</td>
+       <td>{{ i.Email }}</td>
+       <td>{{ i.Qualification }}</td>
+       <td>{{ i.Area_Of_Interest }}</td>
+       <td>{{ i.Phone_Number }}</td>
+       <td></td>
+     </tr>
+     {% endfor %}
+     </table>
+</body>
+</html>
