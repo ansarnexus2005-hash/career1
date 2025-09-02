@@ -14,4 +14,5 @@ admin.site.register(HrRegisterTable)
 admin.site.register(RequestTable)
 admin.site.register(CourseTable)
 admin.site.register(ComplaintTable)
+admin.site.register(CollegeTable)
 

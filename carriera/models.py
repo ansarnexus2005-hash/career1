@@ -66,7 +66,6 @@ class CourseTable(models.Model):
    CourseName = models.CharField(max_length=100,unique=True)
    Fees = models.CharField(max_length=100,unique=True)
    Duration = models.CharField(max_length=100,unique=True)
-   # College = 
    Video = models.FileField('coursevideo/',null=True, blank=True)
    
 
@@ -75,3 +74,9 @@ class ComplaintTable(models.Model):
    Reply = models.CharField(max_length=1000,null=True, blank=True)
    Created_at = models.DateField(auto_now_add=True,null=True, blank=True)
    USER =  models.ForeignKey(UserTable, on_delete=models.CASCADE)
+
+class CollegeTable(models.Model):
+   collegeName = models.CharField(max_length=100,null=True, blank=True)
+   Address = models.CharField(max_length=100,null=True, blank=True)
+   Email = models.CharField(max_length=50)
+   PhoneNo = models.BigIntegerField(null=True, blank=True)

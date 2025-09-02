@@ -1,9 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 
 from carriera.models import *
-from carriera.form import CourseForm
+from carriera.form import CollegeForm, CourseForm
 
 class LoginPage(View):
     def get(self,request):
@@ -95,6 +95,46 @@ class Viewrequested(View):
 class Homepagehr(View):
     def get(self,request):
         return render(request,'HR/homepagehr.html')
+    
+class Addcollege(View):
+    def get(self,request):
+        return render(request,'Administration/collegename.html')
+    def post(self,request):
+        v=CollegeForm(request.POST)
+        print("------------------>", request.POST)
+        if v.is_valid():
+            v.save()
+            return HttpResponse('''<script>alert('College added successfully');window.location='/ViewCollege'</script>''')
+        
+class DeleteCollege(View):
+    def get(self,request, c_id):
+        obj = CollegeTable.objects.get(id=c_id)
+        obj.delete()
+        return redirect('ViewCollege')
+    
+class EditCollege(View):
+    def get(self,request, c_id):
+        obj = CollegeTable.objects.get(id=c_id)
+        return render(request,'Administration/Editcollege.html',{'val': obj})
+
+    
+class ViewCollege(View):
+    def get(self,request):
+        obj = CollegeTable.objects.all()
+        return render(request,'Administration/viewcollege.html',{'val': obj})
+    
+
+
+
+        
+
+
+
+
+
+
+
+        
 
 
 

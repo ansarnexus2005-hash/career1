@@ -48,6 +48,10 @@ class ComplaintForm(ModelForm):
         Model=ComplaintTable
         fields=['Complaint','Reply','Created_at','USER']
         
+class CollegeForm(ModelForm):
+    class Meta:
+        model =CollegeTable
+        fields=['collegeName','Address','Email','PhoneNo']
                                  
 
 

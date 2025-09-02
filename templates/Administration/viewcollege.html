@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College List</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>College Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+        {% for i in val %}
+        <tr>
+            <td>{{ i.collegeName }}</td>
+            <td>{{ i.Address }}</td>
+            <td>{{ i.Email }}</td>
+            <td>{{ i.PhoneNo }}</td>
+            <td>
+                <a href="/EditCollege/{{ i.id }}">Edit</a></br>
+                 <a href="/DeleteCollege/{{ i.id }}">Delete</a>
+            </td>
+        </tr>
+       
+        {% endfor %}
+         <tr>
+            <td><a href="/Addcollege">add</a></td>
+        </tr>
+    </table>
+</body>
+</html>

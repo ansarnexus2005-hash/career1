@@ -19,5 +19,9 @@ urlpatterns = [
     path('Register',Register.as_view(),name='Register'),
     path('Viewjobrole',Viewjobrole.as_view(),name='Viewjobrole'),
     path('Viewrequested',Viewrequested.as_view(),name='Viewrequested'),
-    path('Homepagehr',Homepagehr.as_view(),name='Homepagehr',)
+    path('Homepagehr',Homepagehr.as_view(),name='Homepagehr'),
+    path('Addcollege',Addcollege.as_view(),name='Addcollege'),
+    path('DeleteCollege/<int:c_id>',DeleteCollege.as_view(),name='DeleteCollege'),
+    path('EditCollege/<int:c_id>',EditCollege.as_view(),name='EditCollege'),
+    path('ViewCollege',ViewCollege.as_view(),name='ViewCollege'),
 ]

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add College</title>
+</head>
+<body>
+    <h1>Add College</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="collegeName">College Name:</label><br>
+        <input type="text" id="collegeName" name="collegeName"><br><br>
+
+        <label for="Address">Address:</label><br>
+        <textarea id="Address" name="Address" rows="4" cols="50"></textarea><br><br>
+
+        <label for="Email">Email:</label><br>
+        <input type="Email" id="Email" name="Email"><br><br>
+
+        <label for="PhoneNo">Phone</label><br>
+        <input type="number" id="number" name="PhoneNo"><br><br>
+
+        <input type="submit" value="SUBMIT">
+    </form>
+</body>
+</html>
