@@ -7,6 +7,7 @@ urlpatterns = [
     # ///////////////////////////////// ADMIN //////////////////////////////////////////
 
     path('Complaint',Complaint.as_view(),name='Complaint'),
+    path('CompReply/<int:complaint_id>',CompReply.as_view(),name='CompReply'),
     path('VerifyHR',VerifyHR.as_view(),name='VerifyHR'),
     path('ViewUser',ViewUser.as_view(),name='ViewUser'),
     path('Reply',Reply.as_view(),name='Reply'),

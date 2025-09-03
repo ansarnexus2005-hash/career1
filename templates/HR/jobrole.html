@@ -6,30 +6,38 @@
     <title>Document</title>
 </head>
 <body>
+        <form method="post">
+            {% csrf_token %}
+
     <table> 
          <tr>
+        <td>Title name:</td>
+        <td><input type="text" name="Title"></td>
+        </tr>
+         <tr>
         <td>Company name:</td>
-        <td><input type="text"></td>
+        <td><input type="text" name="Company_Name"></td>
         </tr>
         <tr>
         <td>Description:</td>
-        <td><input type="text"></td>
+        <td><input type="text" name="Description"></td>
         </tr>
         <tr>
         <td>Experience:</td>
-        <td><input type="text"></td>
+        <td><input type="text" name="Experience"></td>
         </tr>
         <tr>
         <td>Job roles:</td>
-        <td><input type="text"></td>
+        <td><input type="text" name="Job_Role"></td>
         </tr>
         <tr>
         <td>Salary:</td>
-        <td><input type="text"></td>
+        <td><input type="text" name="Salary"></td>
         </tr>
         <tr>
         <td><input type="submit" value="ADD"></td>
         </tr>
     </table>
+        </form>
 </body>
 </html>

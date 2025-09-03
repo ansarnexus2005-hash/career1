@@ -1,9 +1,10 @@
+from urllib import request
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
 from carriera.models import *
-from carriera.form import CollegeForm, CourseForm
+from carriera.form import CollegeForm, CourseForm, HrRegisterForm, JobroleForm
 
 class LoginPage(View):
     def get(self,request):
@@ -22,7 +23,7 @@ class LoginPage(View):
             else:
                 return HttpResponse('''<script>alert("user not found");window.location='/'</script>''')
         except LoginTable.DoesNotExist:
-            #Handle care where login details does not exit
+            #Handle care where login details does not exit  
                 return HttpResponse('''<script>alert("invalid username or password");window.location='/'</script>''')
         
 
@@ -34,6 +35,16 @@ class Complaint(View):
         print(obj)
         return render(request, "Administration/complaint.html", {'val': obj}) 
     
+class CompReply(View):
+    def post(self,request,complaint_id):
+        reply = request.POST['Reply']
+        obj = ComplaintTable.objects.get(id=complaint_id)
+        obj.Reply=reply
+        obj.save()
+        return HttpResponse('''<script>alert("reply sended successfully");window.location='/Complaint'</script>''')
+
+
+
 class Course(View):
     def get(self,request):
         return render(request, "Administration/course.html")
@@ -70,7 +81,7 @@ class addcourse(View):
         c=CourseForm(request.POST, request.FILES)
         if c.is_valid():
             c.save()
-        return HttpResponse('''<script>alert('logout successfully');window.location='/LoginPage'</script>''')
+        return HttpResponse('''<script>alert('added successfully');window.location='/AdminHome'</script>''')
 
 
     
@@ -78,15 +89,34 @@ class addcourse(View):
 class Jobrole(View):
     def get(self,request):
         return render(request,'HR/jobrole.html')
+    def post(self,request):
+        c=JobroleForm(request.POST)
+        if c.is_valid():
+            c.save()
+            return HttpResponse('''<script>alert('added successfully');window.location='/Viewjobrole'</script>''')
+
 
 class Register(View):
     def get(self,request):
         return render(request,'HR/register.html')
+    def post(self,request):
+        obj=HrRegisterForm(request.POST)
+        if obj.is_valid():
+            c=obj.save(commit=False)
+            l=LoginTable.objects.create(Username=c.Email, Password=request.POST.get('Password'), UserType='HR')
+            c.loginid=l
+            c.save()
+            return HttpResponse('''<script>alert('Rergistered successfully');window.location='/'</script>''')
+
 
    
 class Viewjobrole(View):
     def get(self,request):
-        return render(request,'HR/viewjobrole.html')
+        obj=JobroleTable.objects.all()
+        return render(request,"HR/jobrole.html",{'val':obj})
+
+
+    
     
 class Viewrequested(View):
     def get(self,request):
@@ -116,6 +146,13 @@ class EditCollege(View):
     def get(self,request, c_id):
         obj = CollegeTable.objects.get(id=c_id)
         return render(request,'Administration/Editcollege.html',{'val': obj})
+    def post(self,request, c_id):
+        obj = CollegeTable.objects.get(id=c_id)
+        v=CollegeForm(request.POST, instance=obj)
+        print("------------------>", request.POST)
+        if v.is_valid():
+            v.save()
+            return HttpResponse('''<script>alert('Edited successfully');window.location='/ViewCollege'</script>''')
 
     
 class ViewCollege(View):

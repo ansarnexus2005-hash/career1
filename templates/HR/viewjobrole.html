@@ -8,24 +8,31 @@
 <body>
     <table border="1">
         <tr>
+        <th>Title</th>
         <th>Company name</th>
         <th>Description</th>
         <th>Experience</th>
         <th>Job roles</th>
         <th>Salary</th>
-        <td></td>
+        <td>Actions</td>
         </tr>
+        {{ % for i in val %}}
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{ i.Title }}</td>
+            <td>{{ i.company_name }}</td>
+            <td>{{ i.Description }}</td>
+            <td>{{ i.Experience }}</td>
+            <td>{{ i.Job_Role }}</td>
+            <td>{{ i.Salary }}</td>
             <td>
-                <a href="">EDIT</a>
+                <a href="/Editjobrole">Edit</a>
                 <br>
-                <a href="">DELETE</a>
+                <a href="/Deletejobrole">Delete</a>
             </td>
+        </tr>
+        {{% endfor %}}
+        <tr>
+            <td><a href="/Jobrole">add</a></td>
         </tr>
     </table>
 </body>

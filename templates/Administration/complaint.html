@@ -13,23 +13,24 @@
            <th>Username</th>
            <th>E-mail</th>
            <th>Reply</th>
+           <th>Send Reply</th>
        </tr>
        {% for i in val %}
        <tr>
            <td>{{ i.Created_at }}</td>
            <td>{{ i.Complaint }}</td>
            <td>{{ i.USER.Name }}</td>
-           <td>{{i.USER.Email }}</td>
-           
-
-
-           <td>{{ i.Reply}}</td>
-       
+           <td>{{ i.USER.Email }}</td>
+           <td>{{ i.Reply }}</td>
            <td>
-            <a href="Reply">Reply</a>
+               <form method="post" action="CompReply/{{ i.id }}">
+                   {% csrf_token %}
+                   <input type="text" name="Reply" required>
+                   <input type="submit" value="Send">
+               </form>
            </td>
-        </tr>
-        {% endfor %}
+       </tr>
+       {% endfor %}
     </table>
 </body>
 </html>

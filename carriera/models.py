@@ -28,18 +28,20 @@ class ResumeTable(models.Model):
    USER = models.ForeignKey(UserTable, on_delete=models.CASCADE)
 
 class HRTable(models.Model):
+   Name = models.CharField(max_length=100, null=True, blank=True)
    Company_Name = models.CharField(max_length=100, null=True, blank=True)
    Email = models.EmailField(unique=True)
    Phone_Number = models.CharField(max_length=15, unique=True)
    type_of_indusrty=models.CharField(max_length=100,unique=True)
 
 class JobroleTable(models.Model):
-   Title = models.CharField(max_length=200, unique=True)
-   Description=models.CharField(max_length=1000,unique=True)
-   Experience = models.CharField(max_length=1000, unique=True)
-   Job_Role = models.CharField(max_length=100, unique=True)       
-   Company_Name= models.CharField(max_length=100, unique=True)
-   Salary = models.CharField(max_length=50, unique=True)
+   Title = models.CharField(max_length=200)
+   Description=models.CharField(max_length=1000)
+   Experience = models.CharField(max_length=1000)
+   Job_Role = models.CharField(max_length=100)       
+   company_name= models.CharField(max_length=100)
+   Salary = models.CharField(max_length=50)
+   HR_id = models.ForeignKey(HRTable, on_delete=models.CASCADE)
 
 class UserRequestTable(models.Model):
    Username = models.CharField(max_length=100, unique=True)
@@ -56,6 +58,7 @@ class HrRegisterTable(models.Model):
    Email = models.CharField(max_length=100,unique=True)
    Address = models.CharField(max_length=100, null=True, blank=True)
    PhoneNo = models.BigIntegerField(null=True, blank=True)
+   loginid= models.ForeignKey(LoginTable, on_delete=models.CASCADE, null=True, blank=True)
 
 class RequestTable(models.Model):
    USER = models.ForeignKey(UserTable, on_delete=models.CASCADE)
