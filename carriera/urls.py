@@ -25,4 +25,6 @@ urlpatterns = [
     path('DeleteCollege/<int:c_id>',DeleteCollege.as_view(),name='DeleteCollege'),
     path('EditCollege/<int:c_id>',EditCollege.as_view(),name='EditCollege'),
     path('ViewCollege',ViewCollege.as_view(),name='ViewCollege'),
+    path('Editjobrole/<int:c_id>',Editjobrole.as_view(),name='Editjobrole'),
+    path('Deletejobrole/<int:c_id>',Deletejobrole.as_view(),name='Deletejobrole'),
 ]

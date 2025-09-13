@@ -113,7 +113,7 @@ class Register(View):
 class Viewjobrole(View):
     def get(self,request):
         obj=JobroleTable.objects.all()
-        return render(request,"HR/jobrole.html",{'val':obj})
+        return render(request,"HR/viewjobrole.html",{'val':obj})
 
 
     
@@ -159,6 +159,25 @@ class ViewCollege(View):
     def get(self,request):
         obj = CollegeTable.objects.all()
         return render(request,'Administration/viewcollege.html',{'val': obj})
+    
+class Editjobrole(View):
+    def get(self,request,c_id):
+        obj = JobroleTable.objects.get(id=c_id)
+        return render(request,'HR/Editjobrole.html',{'val': obj})
+    def post(self,request, c_id):
+        obj = JobroleTable.objects.get(id=c_id)
+        v=JobroleForm(request.POST, instance=obj)
+        print("-------------------->",request.POST)
+        if v.is_valid():
+            v.save()
+            return HttpResponse('''<script>alert('Edited successfully');window.location='/Viewjobrole'</script>''')
+
+
+class Deletejobrole(View):
+    def get(self,request, c_id):
+        obj = JobroleTable.objects.get(id=c_id)
+        obj.delete()
+        return redirect('Viewjobrole')
     
 
 

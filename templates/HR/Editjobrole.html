@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit jobrole</h1>
+        <form method="post">
+            {% csrf_token %}
+
+    <table> 
+         <tr>
+        <td>Title name:</td>
+        <td><input type="text" name="Title" value="{{val.Title}}"><br><br></td>
+        </tr>
+         <tr>
+        <td>Company name:</td>
+        <td><input type="text" name="Company_Name" value="{{val.Title}}"><br><br>></td>
+        </tr>
+        <tr>
+        <td>Description:</td>
+        <td><input type="text" name="Description" value="{{val.Description}}"><br><br>></td>
+        </tr>
+        <tr>
+        <td>Experience:</td>
+        <td><input type="text" name="Experience" value="{{val.Experience}}"><br><br>></td>
+        </tr>
+        <tr>
+        <td>Job roles:</td>
+        <td><input type="text" name="Job_Role" value="{{val.Job_Role}}"><br><br>></td>
+        </tr>
+        <tr>
+        <td>Salary:</td>
+        <td><input type="text" name="Salary" value="{{val.Salary}}"><br><br>></td>
+        </tr>
+        <tr>
+        <td><input type="submit" value="ADD"></td>
+        </tr>
+    </table>
+        </form>
+</body>
+</html>
