@@ -14,7 +14,6 @@ urlpatterns = [
     path('AdminHome',AdminHome.as_view(),name='AdminHome'),
     path('course',Course.as_view(),name='course'),
     path('logout',Logout.as_view(),name='logout'),
-    path('addcourse',addcourse.as_view(),name='Addcourse'),
     # ///////////////////////////////// HR /////////////////////////////////////////////
     path('Jobrole',Jobrole.as_view(),name='Jobrole'),
     path('Register',Register.as_view(),name='Register'),
@@ -27,4 +26,5 @@ urlpatterns = [
     path('ViewCollege',ViewCollege.as_view(),name='ViewCollege'),
     path('Editjobrole/<int:c_id>',Editjobrole.as_view(),name='Editjobrole'),
     path('Deletejobrole/<int:c_id>',Deletejobrole.as_view(),name='Deletejobrole'),
+    path('')
 ]

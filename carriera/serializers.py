@@ -1,55 +1,52 @@
-from django.forms import ModelForm
-
+from rest_framework.serializers import ModelSerializer
 from carriera.models import *
 
-
-class CertificateForm(ModelForm):
+class CertificateSerializer(ModelSerializer):
     class Meta:
         model=CertificateTable
         fields=['Name','Certificate','Description','Date','USER']
 
-class ResumeForm(ModelForm):
+class Resumeserializer(ModelSerializer):
     class Meta:
         model=ResumeTable
-        fields=['Resume','Date','USER']
-
-
-
-class JobroleForm(ModelForm):
+        fields=['Resume','Date','USER']       
+    
+class Jobroleserializer(ModelSerializer):
     class Meta:
         model=JobroleTable
         fields=['Title','Description','Experience','Job_Role','Salary']    
 
-class UserRequestForm(ModelForm):
+
+class UserRequestserializer(ModelSerializer):
     class Meta:
         model=UserRequestTable
         fields=['Username','DOB','Email','Qualification','Address','Area_of_Interest','PhoneNo']
 
-class HrRegisterForm(ModelForm):
+class HrRegisterserializer(ModelSerializer):
     class Meta:
         model=HrRegisterTable
         fields=['Name','CompanyId','Email','Address','PhoneNo']
 
-class RequestForm(ModelForm):
+class Requestserializer(ModelSerializer):
     class Meta:
         model=RequestTable
         fields=['USER','Status','JOB']
 
-class CourseForm(ModelForm):
+class Courseserializer(ModelSerializer):
     class Meta:
         model=CourseTable
         fields=['CourseName','college']
 
-class ComplaintForm(ModelForm):
+class Complaintserializer(ModelSerializer):
     class Meta:
         model=ComplaintTable
         fields=['Complaint','Reply','USER']
-        
-class CollegeForm(ModelForm):
+
+class Collegeserializer(ModelSerializer):
     class Meta:
         model =CollegeTable
         fields=['collegeName','Address','Email','PhoneNo']
                                  
 
 
-        
+                

@@ -5,6 +5,7 @@ from django.views import View
 
 from carriera.models import *
 from carriera.form import CollegeForm, CourseForm, HrRegisterForm, JobroleForm
+from carriera.serializers import CertificateSerializer
 
 class LoginPage(View):
     def get(self,request):
@@ -14,7 +15,7 @@ class LoginPage(View):
         password1 = request.POST['Password']
         try:
             obj = LoginTable.objects.get(Username=username1, Password=password1)
-            request.session['username'] = obj.id
+            request.session['userid'] = obj.id
             # Handle based on user type
             if obj.UserType =='admin':
                 return HttpResponse('''<script>alert("welcome back");window.location='/AdminHome'</script>''')
@@ -47,12 +48,19 @@ class CompReply(View):
 
 class Course(View):
     def get(self,request):
-        return render(request, "Administration/course.html")
+        obj = CollegeTable.objects.all()
+    def post(self,request):
+        c=CourseForm(request.POST)
+        if c.is_valid():
+            c.save()
+            return HttpResponse('''<script>alert('added successfully');window.location='/course'</script>''')
+
+    
     
     
 class VerifyHR(View):
     def get(self,request):
-        obj = HRTable.objects.all()
+        obj = HrRegisterTable.objects.all()
         return render(request, "Administration/verifyHR.html", {'val':obj})
     
 class Reply(View):
@@ -72,16 +80,8 @@ class AdminHome(View):
     
 class Logout(View):
     def get(self,request):
-        return HttpResponse('''<script>alert('logout successfully');window.location='/LoginPage'</script>''')
+        return HttpResponse('''<script>alert('logout successfully');window.location='/'</script>''')
     
-class addcourse(View):
-    def get(self,request):
-        return render(request,"Administration/addcourse.html")
-    def post(self,request):
-        c=CourseForm(request.POST, request.FILES)
-        if c.is_valid():
-            c.save()
-        return HttpResponse('''<script>alert('added successfully');window.location='/AdminHome'</script>''')
 
 
     
@@ -91,22 +91,35 @@ class Jobrole(View):
         return render(request,'HR/jobrole.html')
     def post(self,request):
         c=JobroleForm(request.POST)
+        d=HrRegisterTable.objects.get(loginid__id = request.session['userid'])
         if c.is_valid():
-            c.save()
+            reg = c.save(commit=False)
+            reg.HR_id = d
+            reg.save()
             return HttpResponse('''<script>alert('added successfully');window.location='/Viewjobrole'</script>''')
 
 
 class Register(View):
     def get(self,request):
         return render(request,'HR/register.html')
-    def post(self,request):
-        obj=HrRegisterForm(request.POST)
+    def post(self, request):
+        obj = HrRegisterForm(request.POST)
         if obj.is_valid():
-            c=obj.save(commit=False)
-            l=LoginTable.objects.create(Username=c.Email, Password=request.POST.get('Password'), UserType='HR')
-            c.loginid=l
+            c = obj.save(commit=False)
+            l = LoginTable.objects.create(
+                Username=c.Email,
+                Password=request.POST.get('Password'),
+                UserType='HR'
+            )
+            c.loginid = l
             c.save()
-            return HttpResponse('''<script>alert('Rergistered successfully');window.location='/'</script>''')
+            return HttpResponse(
+                '''<script>alert('Registered successfully');window.location='/'</script>'''
+            )
+        else:
+            # Optional: Log or print form errors for debugging
+            print(obj.errors)
+            return render(request, 'HR/register.html', {'form': obj})
 
 
    
@@ -181,10 +194,52 @@ class Deletejobrole(View):
     
 
 
+# //////////////////////////////////////// API ///////////////////////////////
 
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+
+class LoginPage(APIView):
+    def post(self,request):
+        response_dict={}
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        print("username received:",username)
+
+        if not username or not password:
+            response_dict["message"] = "username and passord required"
+            return Response(response_dict,status=status.HTTp_400_BAD_REQUEST)
+
+        t_user = LoginTable.objects.filter(username=username).first()
+        print("user object:",t_user)
+
+        if not t_user:
+            response_dict["message"] = "user not found"
+            return Response(response_dict,status=status.HTTP_401_UNAUTHORIZED)
         
+        if t_user.Password != password:
+            response_dict["message"] =  "invalid password"
+            return Response(response_dict,status=status.HTTP_401_UNAUTHORIZED)
+        response_dict["message"] = "success"
+        response_dict["login_id"] = t_user.id
 
+        return Response(response_dict,status=status.HTTP_200_OK)    
 
+class uploadcertificateApi(APIView):
+    def get(self,request):
+        try:
+            uplodcertificateApi=CertificateTable.objects.all()
+
+            if not uplodcertificateApi.exists():
+                return Response([],status.HTTP_200_OK)
+            
+            serializer=CertificateSerializer(Complaint,many=True)
+            return Response(serializer.data,status=status.HTTP_200_ok)
+        
+        except Exception as e:
+            return Response({"error":str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 

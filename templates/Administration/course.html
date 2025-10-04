@@ -48,7 +48,8 @@
     </style>
 </head>
 <body>
-
+    <form action="" method="post">
+        {% csrf_token %}
     <div class="container">
         <h2>Select a Course</h2>
 
@@ -62,62 +63,17 @@
                 <option value="mca">MCA</option>
             </select>
         </div>
-        <div class="form-group"
+        <div class="form-group">
            <label for="college">College name</label>
             <select id="collegename">
                 <option value="">--collegename--</option>
-                <option value=
+                {% for i in val %}
+                <option value="{{ i.id }}">{{ i.collegeName }}</option>
+                {% endfor %}
             </select>
-    </div>
-
-        <div class="form-group">
-            <label for="fees">Fees</label>
-            <input type="text" id="fees" readonly>
         </div>
-
-        <div class="form-group">
-            <label for="duration">Duration</label>
-            <input type="text" id="duration" readonly>
-        </div>
+        <input type="submit" value="Submit">
     </div>
-
-    <script>
-        function updateDetails() {
-            const course = document.getElementById('course').value;
-            const feesInput = document.getElementById('fees');
-            const durationInput = document.getElementById('duration');
-
-            const fee = "₹50,000"; // same for all
-
-            let duration = "";
-
-            switch (course) {
-                case "bca":
-                    duration = "3 Years";
-                    break;
-                case "bsc":
-                    duration = "3 Years";
-                    break;
-                case "eng":
-                    duration = "4 Years";
-                    break;
-                case "mca":
-                    duration = "2 Years";
-                    break;
-                default:
-                    duration = "";
-            }
-
-            // If a valid course is selected, show the values
-            if (course !== "") {
-                feesInput.value = fee;
-                durationInput.value = duration;
-            } else {
-                feesInput.value = "";
-                durationInput.value = "";
-            }
-        }
-    </script>
-
+    </form>
 </body>
 </html>
