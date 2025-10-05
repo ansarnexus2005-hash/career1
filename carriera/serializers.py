@@ -47,6 +47,13 @@ class Collegeserializer(ModelSerializer):
         model =CollegeTable
         fields=['collegeName','Address','Email','PhoneNo']
                                  
+class User_Serializer(ModelSerializer):
+    class Meta:
+        model=UserTable
+        fields=['Name','DOB','Email','Qualification','Area_Of_Interest','PhoneNo']
 
 
-                
+class Login_Serializer(ModelSerializer):
+    class Meta:
+        model=LoginTable
+        fields=['Username','Password','UserType']

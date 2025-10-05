@@ -2,7 +2,7 @@ from django.db import models
  
 class LoginTable(models.Model):
   Username = models.CharField(max_length=100)
-  Password = models.CharField(max_length=100)
+  Password= models.CharField(max_length=100)
   UserType = models.CharField(max_length=50, null=True,blank=True)
 
 class UserTable(models.Model):
@@ -11,8 +11,8 @@ class UserTable(models.Model):
    Email = models.CharField(max_length=100, null=True, blank=True)
    Qualification = models.CharField(max_length=100, null=True, blank=True)
    Area_Of_Interest = models.CharField(max_length=100, null=True, blank=True)
-   Phone_Number = models.CharField(max_length=100, null=True, blank=True)
-   LOGIN = models.ForeignKey(LoginTable, on_delete=models.CASCADE)
+   PhoneNo = models.CharField(max_length=100, null=True, blank=True)
+   LOGIN = models.ForeignKey(LoginTable, on_delete=models.CASCADE, null=True, blank=True)
 
 class CertificateTable(models.Model):
    Name = models.CharField(max_length=100,unique=True)

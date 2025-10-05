@@ -3,7 +3,7 @@ from django.urls import path
 from carriera.views import *
 
 urlpatterns = [
-    path('',LoginPage.as_view(),name='LoginPage'),
+    path('',LoginView.as_view(),name='LoginPage'),
     # ///////////////////////////////// ADMIN //////////////////////////////////////////
 
     path('Complaint',Complaint.as_view(),name='Complaint'),
@@ -26,5 +26,15 @@ urlpatterns = [
     path('ViewCollege',ViewCollege.as_view(),name='ViewCollege'),
     path('Editjobrole/<int:c_id>',Editjobrole.as_view(),name='Editjobrole'),
     path('Deletejobrole/<int:c_id>',Deletejobrole.as_view(),name='Deletejobrole'),
-    path('')
-]
+
+
+
+
+
+
+
+    # ////////////////////////////////////////// API USER /////////////////////////////////////////
+    path('login/api/',LoginPage.as_view(),name='loginapi'),
+    path('uploadcertificate/api/',uploadcertificateApi.as_view(),name='uploadcertificateapi'),
+    path('UserRequest/api/',UserRequestApi.as_view(),name='UserRequestapi'),
+    ]

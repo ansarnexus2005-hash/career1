@@ -5,9 +5,9 @@ from django.views import View
 
 from carriera.models import *
 from carriera.form import CollegeForm, CourseForm, HrRegisterForm, JobroleForm
-from carriera.serializers import CertificateSerializer
+from carriera.serializers import *
 
-class LoginPage(View):
+class LoginView(View):
     def get(self,request):
         return render(request, "Administration/login.html")
     def post(self,request):
@@ -240,8 +240,27 @@ class uploadcertificateApi(APIView):
         
         except Exception as e:
             return Response({"error":str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+class UserRequestApi(APIView):
+    def post(self,request):
+        print("#####################",request.data)
+        user_serial = User_Serializer(data=request.data)
+        login_serial = Login_Serializer(data=request.data)
 
 
+        data_valid = user_serial.is_valid()
+        login_valid = login_serial.is_valid()
+
+        if data_valid and login_valid:
+            login_profile = login_serial.save(UserType='USER')
+
+            user_serial.save(LOGIN=login_profile)
+            return Response(user_serial.data,status=status.HTTP_201_CREATED)
+        
+        return Response({
+           'login_error':login_serial.errors if not login_valid else None,
+           'user_error':user_serial.errors if not data_valid else None 
+        },status=status.HTTP_400_BAD_REQUEST)
 
 
 
