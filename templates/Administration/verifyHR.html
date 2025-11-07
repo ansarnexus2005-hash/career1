@@ -3,30 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Verify HR</title>
 </head>
 <body>
-     <table border="1">
-    <tr>
-        <th>Company_Name</th>
-        <th>E-mail</th>
-        <th>Phone NO</th>
-        <th>Type_of_Indusrty</th>
-        <td></td>
-    </tr> 
-    {% for i in val %}  
-    <tr>
-        <td>{{ i.CompanyId }}</td>
-        <td>{{ i.Email }}</td>
-        <td>{{ i.PhoneNo }}</td>
-        <td>{{ i.Address }}</td>
-        <td></td>
-        <td>
-            <a href="">ACCEPT</a><br>
-            <a href="">REJECT </a>
-        </td>
-    </tr> 
-    {% endfor %}
-</table>
+    <table border="1">
+        <tr>
+            <th>Company_Name</th>
+            <th>E-mail</th>
+            <th>Phone NO</th>
+            <th>Type_of_Industry</th>
+            <th>Actions</th>
+        </tr> 
+        {% for i in val %}  
+        <tr>
+            <td>{{ i.CompanyId }}</td>
+            <td>{{ i.Email }}</td>
+            <td>{{ i.PhoneNo }}</td>
+            <td>{{ i.Address }}</td>
+            <td>
+                {% if i.loginid.UserType == "pending" %}
+                    <a href="/ApproveCompany/{{ i.loginid.id }}">ACCEPT</a><br>
+                    <a href="/RejectCompany/{{ i.loginid.id }}">REJECT</a>
+                {% elif i.loginid.UserType == "HR" %}
+                    <a href="/RejectCompany/{{ i.loginid.id }}">REJECT</a>
+                {% elif i.loginid.UserType == "rejected" %}
+                    <a href="/ApproveCompany/{{ i.loginid.id }}">APPROVE</a>
+                {% endif %}
+            </td>
+        </tr> 
+        {% endfor %}
+    </table>
 </body>
 </html>

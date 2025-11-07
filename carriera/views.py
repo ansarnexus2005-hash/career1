@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 
 from carriera.models import *
-from carriera.form import CollegeForm, CourseForm, HrRegisterForm, JobroleForm
+from carriera.form import *
 from carriera.serializers import *
 
 class LoginView(View):
@@ -49,19 +49,56 @@ class CompReply(View):
 class Course(View):
     def get(self,request):
         obj = CollegeTable.objects.all()
+        return render(request,'Administration/course.html',{'college':obj})
     def post(self,request):
         c=CourseForm(request.POST)
         if c.is_valid():
             c.save()
             return HttpResponse('''<script>alert('added successfully');window.location='/course'</script>''')
+class Viewcourse(View):
+    def get(self,request):
+        course=CourseTable.objects.all()
+        return render(request,'Administration/viewcourse.html',{'course':course})
+    
+class EditCourse(View): 
+    def get(self,request, id):
+        course = get_object_or_404(CourseTable, id=id)
+        return render(request, 'Administration/editcourse,html',{'course':course})
+    def post(self,request, id):
 
-    
-    
+        course = get_object_or_404(CourseTable, id=id)
+        course.CourseName = request.POST.get('CourseName') or course.CourseName
+        course.duration = request.POST.get('duration') or course.duration
+        course.fees = request.POST.get('fees') or course.fees
+        course.save()
+        return HttpResponse('''<script>alert('Updated succesfully');window.location='/Viewcourse'</script>''')   
+
+class Deletecourse(View):
+    def get(self,request,id):
+        obj=CourseTable.objects.get(id=id)
+        obj.delete()
+        return HttpResponse('''<script>alert('Deleted Successfully');window.location='/Viewcourse'</script>''')                
+
+   
     
 class VerifyHR(View):
     def get(self,request):
         obj = HrRegisterTable.objects.all()
-        return render(request, "Administration/verifyHR.html", {'val':obj})
+        return render(request, "Administration/VerifyHR.html", {'val':obj})
+class ApproveCompany(View):
+    def get(self,request,login_id):
+        obj=LoginTable.objects.get(id=login_id)
+        print(obj,'??????????')
+        obj.UserType ="HR"
+        obj.save()
+        return HttpResponse('''<script>alert("Succesfully Approved!");window.location="/VerifyHR";</script>''')
+    
+class RejectCompany(View):
+    def get(self, request,login_id):
+        obj=LoginTable.objects.get(id=login_id)
+        obj.UserType = "rejected"
+        obj.save()
+        return HttpResponse('''<script>alert("Successfully Rejected!");window.location="/VerifyHR";</script>''')
     
 class Reply(View):
     def get(self,request):
@@ -101,7 +138,7 @@ class Jobrole(View):
 
 class Register(View):
     def get(self,request):
-        return render(request,'HR/register.html')
+        return render(request,'HR/register.html',)
     def post(self, request):
         obj = HrRegisterForm(request.POST)
         if obj.is_valid():
@@ -109,7 +146,7 @@ class Register(View):
             l = LoginTable.objects.create(
                 Username=c.Email,
                 Password=request.POST.get('Password'),
-                UserType='HR'
+                UserType='pending'
             )
             c.loginid = l
             c.save()
