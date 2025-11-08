@@ -1,6 +1,6 @@
 from urllib import request
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
 from carriera.models import *
@@ -49,7 +49,7 @@ class CompReply(View):
 class Course(View):
     def get(self,request):
         obj = CollegeTable.objects.all()
-        return render(request,'Administration/course.html',{'college':obj})
+        return render(request,'Administration/addcourse.html',{'college':obj})
     def post(self,request):
         c=CourseForm(request.POST)
         if c.is_valid():
@@ -63,13 +63,15 @@ class Viewcourse(View):
 class EditCourse(View): 
     def get(self,request, id):
         course = get_object_or_404(CourseTable, id=id)
-        return render(request, 'Administration/editcourse,html',{'course':course})
+        print('*****************')
+        print(course)
+        print('*****************')
+        return render(request, 'Administration/editcourse.html',{'course':course})
     def post(self,request, id):
 
         course = get_object_or_404(CourseTable, id=id)
         course.CourseName = request.POST.get('CourseName') or course.CourseName
         course.duration = request.POST.get('duration') or course.duration
-        course.fees = request.POST.get('fees') or course.fees
         course.save()
         return HttpResponse('''<script>alert('Updated succesfully');window.location='/Viewcourse'</script>''')   
 
@@ -141,10 +143,11 @@ class Register(View):
         return render(request,'HR/register.html',)
     def post(self, request):
         obj = HrRegisterForm(request.POST)
+        print(obj)
         if obj.is_valid():
             c = obj.save(commit=False)
             l = LoginTable.objects.create(
-                Username=c.Email,
+                Username=request.POST.get('Username'),
                 Password=request.POST.get('Password'),
                 UserType='pending'
             )

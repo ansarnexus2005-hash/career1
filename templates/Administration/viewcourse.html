@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIEW COURSE</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>CourseName</th>
+            <th>College</th>
+            <th>duration</th>
+        </tr>
+        {% for i in course %}
+        <tr>
+            <td>{{ i.CourseName }}</td>
+            <td>{{ i.college.collegeName }}</td>
+            <td>{{ i.duration }}</td>
+            <td>
+                <a href="/EditCourse/{{ i.id }}">Edit</a></br>
+                 <a href="/Deletecourse/{{ i.id }}">Delete</a>
+            </td>
+        </tr>
+       
+        {% endfor %}
+         <tr>
+            <td><a href="/course">add</a></td>
+        </tr>
+    </table>
+</body>
+</html>

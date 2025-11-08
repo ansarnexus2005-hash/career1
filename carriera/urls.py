@@ -17,7 +17,7 @@ urlpatterns = [
     path('course',Course.as_view(),name='course'),
     path('Viewcourse',Viewcourse.as_view(),name='Viewcourse'),
     path('EditCourse/<int:id>/',EditCourse.as_view(),name='EditCourse'),
-    path('Deletecourse/<int:id>/',Deletecourse.as_view(),name=Deletecourse),
+    path('Deletecourse/<int:id>/',Deletecourse.as_view(),name='Deletecourse'),
     path('logout',Logout.as_view(),name='logout'),
     # ///////////////////////////////// HR /////////////////////////////////////////////
     path('Jobrole',Jobrole.as_view(),name='Jobrole'),

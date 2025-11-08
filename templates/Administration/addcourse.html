@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Course</title>
 </head>
-<body><form method="post" enctype="multipart/form-data">
-<div class="form-group">
-            <label for="course">Course</label>
-            <input type="text" name="CourseName">
-                </div>
-                <div class="form-group">
-                    <label for="college">college Name</label>
-                   <input type="text" name="collegename">
-                </div>
-                <div class="form-group">
-                    <label for="fee">fees</label>
-                    <input type="text" name="fee">
-                </div>
-                <div class="form-group">
-                    <label for="duration">Duration</label>
-                    <input type="text" name="Duration">
-                </div>
-                <div class="form-group">
-                    <label for="Video">Video</label>
-                    <input type="file" name="Video">
-                </div>
-               <input type="submit" value="add">
-               </form>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="course">Course Name</label>
+            <input type="text" name="CourseName" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="college">College Name</label>
+            <select name="college" class="form-control">
+                <option value="">Select College</option>
+                {% for c in college %}
+                    <option value="{{ c.id }}">{{ c.collegeName }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="duration">Duration</label>
+            <input type="text" name="duration" class="form-control">
+        </div>
+
+        <button type="submit">Save</button>
+    </form>
 </body>
 </html>

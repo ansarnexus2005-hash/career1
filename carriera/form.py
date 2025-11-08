@@ -28,7 +28,7 @@ class UserRequestForm(ModelForm):
 class HrRegisterForm(ModelForm):
     class Meta:
         model=HrRegisterTable
-        fields=['Name','CompanyId','Email','Address','PhoneNo'
+        fields=['Name','Email','Address','PhoneNo']
 
 class RequestForm(ModelForm):
     class Meta:
@@ -48,7 +48,7 @@ class ComplaintForm(ModelForm):
 class CollegeForm(ModelForm):
     class Meta:
         model =CollegeTable
-        fields=['collegeName','Address','Email','PhoneNo']
+        fields=['collegeName','Address','Email','PhoneNo','weblink']
                                  
 
 

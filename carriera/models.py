@@ -29,7 +29,6 @@ class ResumeTable(models.Model):
 
 class HrRegisterTable(models.Model):
    Name = models.CharField(max_length=100,unique=True)
-   CompanyId = models.CharField(max_length=100,unique=True)
    Email = models.CharField(max_length=100,unique=True)
    Address = models.CharField(max_length=100, null=True, blank=True)
    PhoneNo = models.BigIntegerField(null=True, blank=True)
@@ -73,8 +72,10 @@ class CollegeTable(models.Model):
    Address = models.CharField(max_length=100,null=True, blank=True)
    Email = models.CharField(max_length=50)
    PhoneNo = models.BigIntegerField(null=True, blank=True)
+   weblink = models.CharField(max_length=100,null=True,blank=True)
 
 class CourseTable(models.Model):
    CourseName = models.CharField(max_length=100,unique=True)
    college = models.ForeignKey(CollegeTable, on_delete=models.CASCADE)
+   duration=models.CharField(max_length=100,null=True,blank=True)
  
