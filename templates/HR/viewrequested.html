@@ -3,30 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>View Requested</title>
 </head>
-    <body>
-      <tr>
-          <td>Name:</td>
-          <td><input type="text"></td>
-          <br/><br/>
-          <td>Age:</td>
-          <td><input type="text"></td>
-          <br/><br/>
-          <td>E-mail:</td>
-          <td><input type="text"></td>
-          <br/><br/>
-          <td>Qualification:</td>
-          <td><input type="text"></td>
-          <br/><br/>
-          <td>Area of interest:</td>
-          <td><input type="text"></td>
-          <br/><br/>
-          <td>Phone NO:</td>
-          <td><input type="text"></td>
-          <br/><br/>
-          <td><input type="submit" value="ACCEPT"></td>
-          <td><input type="submit" value="REJECT"></td>
-          <tr></tr>
-    </body>
+<body>
+    <div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Job Role</th>
+                    <th>Phone Number</th>
+                    <th>Resume</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in user_requests_with_resumes %}
+                <tr>
+                    <td class="px-4 py-3">{{ item.userreq.JOB.Job_Role }}</td>
+                    <td class="px-4 py-3">{{ item.userreq.USER.PhoneNo }}</td>
+                    <td class="px-4 py-3">
+                        {% if item.Resume %}
+                            {% for resume in item.Resume %}
+                                <a href="{% url 'view_resume' resume.id %}">View</a>
+                                {% if not forloop.last %}<br>{% endif %}
+                            {% endfor %}
+                        {% else %}
+                            No Resume
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <a href="{% url 'Approve' id=item.userreq.id %}">Select</a>
+                        <a href="{% url 'Reject' id=item.userreq.id %}">Reject</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
 </html>

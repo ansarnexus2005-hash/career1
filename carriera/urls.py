@@ -19,11 +19,14 @@ urlpatterns = [
     path('EditCourse/<int:id>/',EditCourse.as_view(),name='EditCourse'),
     path('Deletecourse/<int:id>/',Deletecourse.as_view(),name='Deletecourse'),
     path('logout',Logout.as_view(),name='logout'),
+    path('DeleteUser/<int:id>/',DeleteUser.as_view(),name='DeleteUser'),
+    
     # ///////////////////////////////// HR /////////////////////////////////////////////
     path('Jobrole',Jobrole.as_view(),name='Jobrole'),
     path('Register',Register.as_view(),name='Register'),
     path('Viewjobrole',Viewjobrole.as_view(),name='Viewjobrole'),
     path('Viewrequested',Viewrequested.as_view(),name='Viewrequested'),
+    path('view_resume/<int:id>/',view_resume.as_view(), name='view_resume'),
     path('Homepagehr',Homepagehr.as_view(),name='Homepagehr'),
     path('Addcollege',Addcollege.as_view(),name='Addcollege'),
     path('DeleteCollege/<int:c_id>',DeleteCollege.as_view(),name='DeleteCollege'),

@@ -17,10 +17,6 @@ class Jobroleserializer(ModelSerializer):
         fields=['Title','Description','Experience','Job_Role','Salary']    
 
 
-class UserRequestserializer(ModelSerializer):
-    class Meta:
-        model=UserRequestTable
-        fields=['Username','DOB','Email','Qualification','Address','Area_of_Interest','PhoneNo']
 
 class HrRegisterserializer(ModelSerializer):
     class Meta:

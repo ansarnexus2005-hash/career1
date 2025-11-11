@@ -1,5 +1,5 @@
 from urllib import request
-from django.http import HttpResponse
+from django.http import FileResponse, Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
@@ -79,8 +79,14 @@ class Deletecourse(View):
     def get(self,request,id):
         obj=CourseTable.objects.get(id=id)
         obj.delete()
-        return HttpResponse('''<script>alert('Deleted Successfully');window.location='/Viewcourse'</script>''')                
+        return HttpResponse('''<script>alert('Deleted Successfully');window.location='/Viewcourse'</script>''')      
 
+class DeleteUser (View):
+    def get(self,request,id):
+        obj=LoginTable.objects.get(id=id)
+        obj.delete()
+        return HttpResponse('''<script>alert('Deleted Successfully');window.location='/ViewUser'</script>''')                
+          
    
     
 class VerifyHR(View):
@@ -126,16 +132,23 @@ class Logout(View):
     
 # /////////////////////////////////////////////////// HR ///////////////////////////////////////////////////
 class Jobrole(View):
-    def get(self,request):
-        return render(request,'HR/jobrole.html')
-    def post(self,request):
-        c=JobroleForm(request.POST)
-        d=HrRegisterTable.objects.get(loginid__id = request.session['userid'])
+    def get(self, request):
+        form = JobroleForm()
+        return render(request, 'HR/jobrole.html', {'form': form})
+
+    def post(self, request):
+        c = JobroleForm(request.POST)
+        d = HrRegisterTable.objects.get(loginid__id=request.session['userid'])
         if c.is_valid():
             reg = c.save(commit=False)
             reg.HR_id = d
             reg.save()
-            return HttpResponse('''<script>alert('added successfully');window.location='/Viewjobrole'</script>''')
+            return HttpResponse(
+                '''<script>alert('Added successfully');window.location='/Viewjobrole'</script>'''
+            )
+        else:
+            # Form is invalid → re-render page with errors
+            return render(request, 'HR/jobrole.html', {'form': c})
 
 
 class Register(View):
@@ -173,7 +186,31 @@ class Viewjobrole(View):
     
 class Viewrequested(View):
     def get(self,request):
-        return render(request,'HR/viewrequested.html')
+        userdata = RequestTable.objects.all()
+        user_requests_with_resumes = []
+        for userreq in userdata:
+            Resume = ResumeTable.objects.filter(USER=userreq.USER)
+            user_requests_with_resumes.append({
+                'userreq':userreq,
+                'Resume':Resume
+            })
+        return render(request,'HR/viewrequested.html',{
+            'user_requests_with_resumes': user_requests_with_resumes
+
+        })
+class view_resume(View):
+    def get(self,request,id):
+
+        # Get the resume by ID
+        resume = ResumeTable.objects.get(id=id)
+
+        # Check if file exists
+        if not resume.Resume:
+            raise Http404("Resume file not found.")
+
+        # Open the file and return it as a response
+        return FileResponse(resume.Resume.open('rb'), content_type='application/pdf')
+
     
 class Homepagehr(View):
     def get(self,request):

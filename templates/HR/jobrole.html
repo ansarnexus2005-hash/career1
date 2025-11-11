@@ -3,41 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Job Category Form</title>
 </head>
 <body>
-        <form method="post">
-            {% csrf_token %}
-
-    <table> 
-         <tr>
-        <td>Title name:</td>
-        <td><input type="text" name="Title"></td>
-        </tr>
-         <tr>
-        <td>Company name:</td>
-        <td><input type="text" name="company_name"></td>
-        </tr>
-        <tr>
-        <td>Description:</td>
-        <td><input type="text" name="Description"></td>
-        </tr>
-        <tr>
-        <td>Experience:</td>
-        <td><input type="text" name="Experience"></td>
-        </tr>
-        <tr>
-        <td>Job roles:</td>
-        <td><input type="text" name="Job_Role"></td>
-        </tr>
-        <tr>
-        <td>Salary:</td>
-        <td><input type="text" name="Salary"></td>
-        </tr>
-        <tr>
-        <td><input type="submit" value="ADD"></td>
-        </tr>
-    </table>
-        </form>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Category:</td>
+                <td>
+                    <select name="category">
+                        <option value="">-- Select Category --</option>
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="AI">AI</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td><input type="text" name="Description"></td>
+            </tr>
+            <tr>
+                <td>Experience:</td>
+                <td><input type="text" name="Experience"></td>
+            </tr>
+            <tr>
+                <td>Job Role:</td>
+                <td><input type="text" name="Job_Role"></td>
+            </tr>
+            <tr>
+                <td>Salary:</td>
+                <td><input type="text" name="Salary"></td>
+            </tr>
+          
+            <tr>
+                <td><input type="submit" name="action" value="ADD"></td>
+               
+            </tr>
+        </table>
+    </form>
 </body>
 </html>

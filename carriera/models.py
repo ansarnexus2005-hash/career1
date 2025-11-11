@@ -34,24 +34,25 @@ class HrRegisterTable(models.Model):
    PhoneNo = models.BigIntegerField(null=True, blank=True)
    loginid= models.ForeignKey(LoginTable, on_delete=models.CASCADE, null=True, blank=True)
 
+class CollegeTable(models.Model):
+   collegeName= models.CharField(max_length=100,null=True, blank=True)
+   Address = models.CharField(max_length=100,null=True, blank=True)
+   Email = models.CharField(max_length=50)
+   PhoneNo = models.BigIntegerField(null=True, blank=True)
+   weblink = models.CharField(max_length=100,null=True,blank=True)
+
+class CourseTable(models.Model):
+   CourseName = models.CharField(max_length=100,unique=True)
+   college = models.ForeignKey(CollegeTable, on_delete=models.CASCADE)
+   duration=models.CharField(max_length=100,null=True,blank=True)
+ 
 class JobroleTable(models.Model):
-   Title = models.CharField(max_length=200)
-   Description=models.CharField(max_length=1000)
-   Experience = models.CharField(max_length=1000)
-   Job_Role = models.CharField(max_length=100)       
-   company_name= models.CharField(max_length=100)
+   category=models.CharField(max_length=100,null=True,blank=True)
+   Description = models.CharField(max_length=1000)
+   Experience = models.CharField(max_length=100)       
+   Job_Role= models.CharField(max_length=100)
    Salary = models.CharField(max_length=50)
-   HR_id = models.ForeignKey(HrRegisterTable, on_delete=models.CASCADE)
-
-class UserRequestTable(models.Model):
-   Username = models.CharField(max_length=100, unique=True)
-   DOB = models.CharField(max_length=100, null=True, blank=True)
-   Email = models.CharField(max_length=100, null=True, blank=True)
-   Qualification = models.CharField(max_length=100, null=True, blank=True)
-   Address = models.CharField(max_length=100, null=True, blank=True)
-   Area_of_Interest = models.CharField(max_length=100, null=True, blank=True)
-   PhoneNo = models.BigIntegerField()
-
+   HR_id = models.ForeignKey(HrRegisterTable, on_delete=models.CASCADE,null=True,blank=True)
 
 
 class RequestTable(models.Model):
@@ -67,15 +68,5 @@ class ComplaintTable(models.Model):
    Created_at = models.DateField(auto_now_add=True,null=True, blank=True)
    USER =  models.ForeignKey(UserTable, on_delete=models.CASCADE)
 
-class CollegeTable(models.Model):
-   collegeName = models.CharField(max_length=100,null=True, blank=True)
-   Address = models.CharField(max_length=100,null=True, blank=True)
-   Email = models.CharField(max_length=50)
-   PhoneNo = models.BigIntegerField(null=True, blank=True)
-   weblink = models.CharField(max_length=100,null=True,blank=True)
 
-class CourseTable(models.Model):
-   CourseName = models.CharField(max_length=100,unique=True)
-   college = models.ForeignKey(CollegeTable, on_delete=models.CASCADE)
-   duration=models.CharField(max_length=100,null=True,blank=True)
  

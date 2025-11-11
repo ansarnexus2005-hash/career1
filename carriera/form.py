@@ -18,12 +18,8 @@ class ResumeForm(ModelForm):
 class JobroleForm(ModelForm):
     class Meta:
         model=JobroleTable
-        fields=['Title','Description','Experience','Job_Role','Salary']    
+        fields=['category','Description','Experience','Job_Role','Salary']    
 
-class UserRequestForm(ModelForm):
-    class Meta:
-        model=UserRequestTable
-        fields=['Username','DOB','Email','Qualification','Address','Area_of_Interest','PhoneNo']
 
 class HrRegisterForm(ModelForm):
     class Meta:
