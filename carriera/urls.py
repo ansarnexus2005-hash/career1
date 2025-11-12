@@ -42,7 +42,10 @@ urlpatterns = [
 
 
     # ////////////////////////////////////////// API USER /////////////////////////////////////////
-    path('login/api/',LoginPage.as_view(),name='loginapi'),
+    path('user/loginpageapi',LoginPage.as_view(),name='loginpageapi'),
     path('uploadcertificate/api/',uploadcertificateApi.as_view(),name='uploadcertificateapi'),
     path('UserRequest/api/',UserRequestApi.as_view(),name='UserRequestapi'),
+    path('viewprofile/api/<int:id>/', viewprofileApi.as_view(), name='viewprofileApi'),
+
+
     ]

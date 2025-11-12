@@ -277,33 +277,35 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-class LoginPage(APIView):
-    def post(self,request):
-        response_dict={}
-        username = request.data.get("username")
-        password = request.data.get("password")
+from django.contrib.auth.hashers import check_password
 
-        print("username received:",username)
+class LoginPage(APIView):
+    def post(self, request):
+        username = request.data.get("Username", "").strip()
+        password = request.data.get("Password", "").strip()
+
+        print("Username received:", username)
+        print("password received:", password)
 
         if not username or not password:
-            response_dict["message"] = "username and passord required"
-            return Response(response_dict,status=status.HTTp_400_BAD_REQUEST)
+            return Response({"message": "Username and Password required"}, status=status.HTTP_400_BAD_REQUEST)
 
-        t_user = LoginTable.objects.filter(username=username).first()
-        print("user object:",t_user)
+        t_user = LoginTable.objects.filter(Username=username).first()
+        print("User object:", t_user)
 
         if not t_user:
-            response_dict["message"] = "user not found"
-            return Response(response_dict,status=status.HTTP_401_UNAUTHORIZED)
-        
+            return Response({"message": "User not found"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # ✅ Simple password match (for plain text)
         if t_user.Password != password:
-            response_dict["message"] =  "invalid password"
-            return Response(response_dict,status=status.HTTP_401_UNAUTHORIZED)
-        response_dict["message"] = "success"
-        response_dict["login_id"] = t_user.id
+            return Response({"message": "Invalid password"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        return Response(response_dict,status=status.HTTP_200_OK)    
-
+        return Response({
+            "message": "Success",
+            "login_id": t_user.id,
+            "UserType": t_user.UserType
+        }, status=status.HTTP_200_OK)
+    
 class uploadcertificateApi(APIView):
     def get(self,request):
         try:
@@ -339,6 +341,14 @@ class UserRequestApi(APIView):
            'user_error':user_serial.errors if not data_valid else None 
         },status=status.HTTP_400_BAD_REQUEST)
 
+class viewprofileApi(APIView):
+    def post(self,request,id):
+        userdata=UserTable.objects.get(id=id)
+        user_serial=User_Serializer(userdata)
+        return Response(user_serial.data,status=status.HTTP_201_CREATED)
+
+
+    
 
 
         
